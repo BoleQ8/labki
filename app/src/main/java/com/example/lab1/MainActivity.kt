@@ -42,5 +42,28 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Pole liczba ocen nie moze byc puste", Toast.LENGTH_SHORT).show()
             }
         }
+
+        val ocenyTextWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(imie.text.toString().isEmpty() || nazwisko.text.toString().isEmpty() || liczbaOcen.text.toString().isEmpty()) {
+                    przyciskOceny.visibility = Button.INVISIBLE
+                } else {
+                    przyciskOceny.visibility = Button.VISIBLE
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        }
+
+        imie.addTextChangedListener(ocenyTextWatcher)
+        nazwisko.addTextChangedListener(ocenyTextWatcher)
+        liczbaOcen.addTextChangedListener(ocenyTextWatcher)
+
     }
 }
