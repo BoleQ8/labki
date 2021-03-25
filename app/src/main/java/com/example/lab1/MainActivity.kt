@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import org.w3c.dom.Text
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,7 +28,6 @@ class MainActivity : AppCompatActivity() {
                 imie.error="Imie nie może być puste!"
             }
         }
-
         nazwisko.setOnFocusChangeListener { _, hasFocus ->
             if(hasFocus) {
                 //Toast.makeText(applicationContext, "Jest fokus", Toast.LENGTH_SHORT).show()
@@ -36,37 +36,48 @@ class MainActivity : AppCompatActivity() {
                 nazwisko.error="Nazwisko nie może być puste!"
             }
         }
-
         liczbaOcen.setOnFocusChangeListener { _, hasFocus ->
+            val test = liczbaOcen.text.toString()
             if(hasFocus) {
                 //Toast.makeText(applicationContext, "Jest fokus", Toast.LENGTH_SHORT).show()
-            } else if(!hasFocus && liczbaOcen.text.isEmpty()) {
-                Toast.makeText(applicationContext, "Pole liczba ocen nie moze byc puste", Toast.LENGTH_SHORT).show()
-                liczbaOcen.error="Podaj oceny od 5 do 15!"
-            }
-        }
-
-        val ocenyTextWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(imie.text.toString().isEmpty() || nazwisko.text.toString().isEmpty() || liczbaOcen.text.isEmpty()) {
-                    przyciskOceny.visibility = Button.INVISIBLE
-                } else {
-                    przyciskOceny.visibility = Button.VISIBLE
+            } else if(!hasFocus && !test.equals("")) {
+                if(liczbaOcen.text.toString().toInt() !in 5..15){
+                    Toast.makeText(applicationContext, "Wpisz do 5 do 15!", Toast.LENGTH_SHORT).show()
+                    liczbaOcen.error="Podaj oceny od 5 do 15!"
                 }
             }
+        }
+        val ocenyTextWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-            override fun afterTextChanged(s: Editable?) {
+                val test = liczbaOcen.text.toString()
+                if(!test.equals("")) {
+                    if(liczbaOcen.text.toString().toInt() !in 5..15 || imie.text.toString().isEmpty() || nazwisko.text.toString().isEmpty()){
+                        przyciskOceny.visibility = Button.INVISIBLE
+                    }
+                    else {
+                        przyciskOceny.visibility = Button.VISIBLE
+                    }
+                }
 
             }
         }
-
+      /*  liczbaOcen.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val test = liczbaOcen.text.toString()
+                if(!test.equals("")) {
+                    if(liczbaOcen.text.toString().toInt() !in 5..15){
+                        przyciskOceny.visibility = Button.INVISIBLE
+                    }
+                }
+            }
+        }) */
         imie.addTextChangedListener(ocenyTextWatcher)
         nazwisko.addTextChangedListener(ocenyTextWatcher)
-        liczbaOcen.addTextChangedListener(ocenyTextWatcher)
-
+      liczbaOcen.addTextChangedListener(ocenyTextWatcher)
     }
 }
