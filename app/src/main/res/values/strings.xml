@@ -3,4 +3,8 @@
     <string name="imie">Imie:</string>
     <string name="nazwisko">Nazwisko:</string>
     <string name="l_ocen">Liczba ocen:</string>
+    <string name="ocenyButton">Oceny</string>
+    <string name="editTextImie">Wpisz imię</string>
+    <string name="editTextNazwisko">Wpisz nazwisko</string>
+    <string name="editTextOceny">Wpisz liczbę ocen (5–15)</string>
 </resources>
