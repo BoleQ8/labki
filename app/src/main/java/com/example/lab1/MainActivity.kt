@@ -20,30 +20,21 @@ class MainActivity : AppCompatActivity() {
         val przyciskOceny = findViewById<Button>(R.id.oceny_b)
 
         imie.setOnFocusChangeListener { _, hasFocus ->
-            if(hasFocus) {
-                //Toast.makeText(applicationContext, "Jest fokus", Toast.LENGTH_SHORT).show()
-            } else if(!hasFocus && imie.text.isEmpty()) {
-                Toast.makeText(applicationContext, "Pole imie nie moze byc puste", Toast.LENGTH_SHORT).show()
-                imie.error="Imie nie może być puste!"
+            if (!hasFocus && imie.text.isEmpty()) {
+                Toast.makeText(applicationContext, "Pole imię nie może być puste!", Toast.LENGTH_SHORT).show()
+                imie.error = "Pole imię nie może być puste!"
             }
         }
         nazwisko.setOnFocusChangeListener { _, hasFocus ->
-            if(hasFocus) {
-                //Toast.makeText(applicationContext, "Jest fokus", Toast.LENGTH_SHORT).show()
-            } else if(!hasFocus && nazwisko.text.isEmpty()) {
-                Toast.makeText(applicationContext, "Pole nazwisko nie moze byc puste", Toast.LENGTH_SHORT).show()
-                nazwisko.error="Nazwisko nie może być puste!"
+            if (!hasFocus && nazwisko.text.isEmpty()) {
+                Toast.makeText(applicationContext, "Pole nazwisko nie może być puste!", Toast.LENGTH_SHORT).show()
+                nazwisko.error = "Pole nazwisko nie może być puste!"
             }
         }
         liczbaOcen.setOnFocusChangeListener { _, hasFocus ->
-            val test = liczbaOcen.text.toString()
-            if(hasFocus) {
-                //Toast.makeText(applicationContext, "Jest fokus", Toast.LENGTH_SHORT).show()
-            } else if(!hasFocus && !test.equals("")) {
-                if(liczbaOcen.text.toString().toInt() !in 5..15){
-                    Toast.makeText(applicationContext, "Wpisz do 5 do 15!", Toast.LENGTH_SHORT).show()
-                    liczbaOcen.error="Podaj oceny od 5 do 15!"
-                }
+            if (!hasFocus && (liczbaOcen.text.isEmpty() || liczbaOcen.text.toString().toInt() !in 5..15)) {
+                Toast.makeText(applicationContext, "Wpisz liczbę ocen od 5 do 15!", Toast.LENGTH_SHORT).show()
+                liczbaOcen.error = "Wpisz liczbę ocen od 5 do 15!"
             }
         }
         val ocenyTextWatcher = object : TextWatcher {
@@ -51,17 +42,10 @@ class MainActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                val test = liczbaOcen.text.toString()
-                if(!test.equals("")) {
-                    if(liczbaOcen.text.toString().toInt() !in 5..15 || imie.text.toString().isEmpty() || nazwisko.text.toString().isEmpty()){
-                        przyciskOceny.visibility = Button.INVISIBLE
-                    }
-                    else {
-                        przyciskOceny.visibility = Button.VISIBLE
-                    }
-                }
-                else{
+                if (liczbaOcen.text.toString() == "" || liczbaOcen.text.toString().toInt() !in 5..15 || imie.text.toString().isEmpty() || nazwisko.text.toString().isEmpty()) {
                     przyciskOceny.visibility = Button.INVISIBLE
+                } else {
+                    przyciskOceny.visibility = Button.VISIBLE
                 }
             }
         }
